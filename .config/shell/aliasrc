@@ -1,0 +1,15 @@
+#!/bin/bash
+
+alias l="ls -gbG --color=auto --block-size=KiB --quoting-style=escape --time-style=+' %d-%b %H:%M ' --group-directories-first"
+alias ll="ls -gbAG --color=auto --block-size=KiB --quoting-style=escape --time-style=+' %d-%b %H:%M ' --group-directories-first"
+
+alias dfg="/usr/bin/git --git-dir=$XDG_DATA_HOME/dotfiles --work-tree=$HOME"
+
+sb() {
+    cd $SECOND_BRAIN && nvim "."
+}
+
+alias gr='cd $(git rev-parse --show-toplevel)'
+alias pdbpy='python -m debugpy --listen 5678 --wait-for-client'
+
+source "$XDG_CONFIG_HOME/shell/environments/env_alias"

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+export SECOND_BRAIN="$HOME/Vaults/rc"
+export WORKENV="rc"
+
+export PATH="$PATH:$HOME/.local/bin:$HOME/scripts"
+
+export PYDEVD_DISABLE_FILE_VALIDATION=1
+
+
+. "$XDG_CONFIG_HOME/shell/secrets"

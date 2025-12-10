@@ -1,0 +1,4 @@
+#!/bin/bash
+
+alias me="export SECOND_BRAIN='$HOME/Vaults/personal' ; export WORKENV='me'"
+alias rc="export SECOND_BRAIN='$HOME/Vaults/rc' ; export WORKENV='rc'"
