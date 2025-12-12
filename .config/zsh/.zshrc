@@ -7,11 +7,9 @@
 # Load the aliases (disabled)
 source "$XDG_CONFIG_HOME/shell/aliasrc"
 
-
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE=$XDG_CACHE_HOME/zsh/history
-
 
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
@@ -51,6 +49,7 @@ prompt_workenv() {
 source "$XDG_CONFIG_HOME/zsh/themes/powerlevel10k/powerlevel10k.zsh-theme"
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+
 [[ ! -f $XDG_CONFIG_HOME/zsh/.p10k.zsh ]] || source "$XDG_CONFIG_HOME/zsh/.p10k.zsh"
 
 #################
@@ -83,15 +82,6 @@ function _bindfzfkeys() {
 
 zvm_after_init_commands+=('_bindfzfkeys')
 
-# FIXME Remove background color of ls directories on SSH connections
-#
-# NOTE: Has to be run all the way at the bottom of the `.zshrc` file.
-# From the docs: "In zsh newer than 5.8 (not including 5.8 itself),
-# zsh-syntax-highlighting uses the add-zle-hook-widget facility to
-# install a zle-line-pre-redraw hook. Hooks are run in order of
-# registration, therefore, z-sy-h must be sourced (and register its
-# hook) after anything else that adds hooks that modify the command-line
-# buffer."
 
 source $XDG_CONFIG_HOME/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

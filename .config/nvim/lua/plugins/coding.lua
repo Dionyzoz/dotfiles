@@ -13,9 +13,7 @@ return {
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'saadparwaiz1/cmp_luasnip',
             'L3MON4D3/LuaSnip'
-
         },
-
 
         config = function()
             -- Set up nvim-cmp.
@@ -91,21 +89,18 @@ return {
                     { name = 'luasnip' }, -- For luasnip users.
                     -- { name = 'nvim_lsp_signature_help' },
                     -- { name = 'buffer' },     -- Completion from current buffer
-                    { name = 'wiki_links' }, -- Custom source for wiki links, if defined
                 }),
                 formatting = {
                     format = function(entry, vim_item)
                         vim_item.menu = ({
                             nvim_lsp = '[LSP]',
                             -- nvim_lua = '[Nvim Lua]',
-                            wiki_links = '[Unreferenced link]',
                             -- buffer = '[Buffer]',
                         })[entry.source.name]
 
                         vim_item.dup = ({
                             -- vsnip = 0,
                             nvim_lsp = 0,
-                            wiki_links = 0,
                             -- buffer = 0,
                         })[entry.source.name] or 0
 
@@ -151,8 +146,9 @@ return {
         -- Setup language servers.
         local lspconfig = require "lspconfig"
 
-        lspconfig.pyright.setup {
-            capabilities = capabilities,
+        vim.lsp.config('*', { capabilities = capabilities })
+
+        vim.lsp.config('pyright', {
             settings = {
                 python = {
                     analysis = {
@@ -167,30 +163,31 @@ return {
                     },
                 },
             },
-        }
+        })
 
-        lspconfig.ruff.setup {
+        vim.lsp.config('ruff', {
             on_attach = function(client, _) client.server_capabilities.hoverProvider = false end,
+
             init_options = {
                 settings = {
                     -- Any extra CLI arguments for `ruff` go here.
                     args = {},
                 }
             }
-        }
+        })
 
-        lspconfig.eslint.setup {
-            capabilities = capabilities,
-            -- on_attach = function(client, bufnr)
-            --     vim.api.nvim_create_autocmd("BufWritePre", {
-            --         buffer = bufnr,
-            --         command = "EslintFixAll",
-            --     })
-            -- end,
-        }
+        -- vim.eslint.setup {
+        --     capabilities = capabilities,
+        --     -- on_attach = function(client, bufnr)
+        --     --     vim.api.nvim_create_autocmd("BufWritePre", {
+        --     --         buffer = bufnr,
+        --     --         command = "EslintFixAll",
+        --     --     })
+        --     -- end,
+        -- }
 
 
-        lspconfig.markdown_oxide.setup({
+        vim.lsp.config('markdown_oxide', {
             -- Ensure that dynamicRegistration is enabled! This allows the LS to take into account actions like the
             -- Create Unresolved File code action, resolving completions for unindexed code blocks, ...
             capabilities = vim.tbl_deep_extend(
@@ -204,11 +201,9 @@ return {
                     },
                 }
             ),
-            -- on_attach = on_attach -- configure your on attach config
         })
 
-        lspconfig.yamlls.setup {
-            capabilities = capabilities,
+        vim.lsp.config('yamlls', {
             settings = {
                 yaml = {
                     schemas = {
@@ -217,28 +212,26 @@ return {
                     }
                 }
             }
-        }
+        })
 
+        -- vim.html.setup {
+        --     capabilities = capabilities,
+        -- }
 
-        lspconfig.html.setup {
-            capabilities = capabilities,
-        }
-
-        lspconfig.bashls.setup {
+        vim.lsp.config('bashls', {
             filetypes = { "sh", "zsh" },
-        }
+        })
 
-        lspconfig.ts_ls.setup {
-            capabilities = capabilities,
+        vim.lsp.config('ts_ls', {
             on_attach = function(client)
                 client.server_capabilities.document_formatting = false
             end,
-        }
-        lspconfig.cssls.setup({
-            capabilities = capabilities,
         })
+        -- lspconfig.cssls.setup({
+        --     capabilities = capabilities,
+        -- })
 
-        lspconfig.clangd.setup {
+        vim.lsp.config('clangd', {
             cmd = {
                 "/usr/bin/clangd",
                 "--background-index",
@@ -252,14 +245,12 @@ return {
             filetypes = { "c", "cpp", "objc", "objcpp" },
             root_dir = lspconfig.util.root_pattern("src"),
             init_option = { fallbackFlags = { "-std=c++2a" } },
-            capabilities = capabilities,
             -- on_attach = function(client, bufnr)
             --     client.resolved_capabilities.document_formatting = true
             -- end
-        }
+        })
 
-        lspconfig.lua_ls.setup {
-            capabilities = capabilities,
+        vim.lsp.config('lua_ls', {
             settings = {
                 Lua = {
                     diagnostics = {
@@ -276,7 +267,18 @@ return {
                     }
                 },
             },
-        }
+        })
+
+        vim.lsp.enable('pyright')
+        vim.lsp.enable('ruff')
+        vim.lsp.enable('markdown_oxide')
+        vim.lsp.enable('yamlls')
+        vim.lsp.enable('bash_ls')
+        vim.lsp.enable('ts_ls')
+        vim.lsp.enable('clangd')
+        vim.lsp.enable('lua_ls')
+        vim.lsp.enable('html')
+        vim.lsp.enable('eslint')
 
 
         -- lspconfig["null-ls"].setup({})
