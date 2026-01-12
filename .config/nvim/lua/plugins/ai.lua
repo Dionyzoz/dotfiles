@@ -3,7 +3,6 @@ return {
         'olimorris/codecompanion.nvim',
         dependencies = { "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter" },
         opts = {
-
             adapters = {
                 http = {
                     deepseek = function()
@@ -37,36 +36,46 @@ return {
                                 api_key = os.getenv("TAVILY_SECRET")
                             }
                         })
-                    end
-
+                    end,
+                     azure_openai = function()
+                        return require("codecompanion.adapters").extend("azure_openai", {
+                          env = {
+                            api_key = os.getenv("AZUREAI_SECRET"),
+                            endpoint = os.getenv("AZUREAI_ENDPOINT"),
+                          },
+                          schema = {
+                            model = {
+                              default = "DeepSeek-V3.2",
+                            },
+                          },
+                        })
+                      end,
                 }
-
-
             },
 
             strategies = {
                 chat = {
-                    adapter = "anthropic",
+                    adapter = "azure_openai",
                 },
                 inline = {
-                    adapter = "anthropic",
+                    adapter = "azure_openai",
                 },
             },
 
             display = {
+                diff = {
+                    enabled = true,
+                    provider =  "mini_diff", -- inline|split|mini.diff
+
+                },
                 chat = {
                     window = {
-                        width = "auto",
-                        -- width = 0.3,
+                        width = 0.4,
                     }
                 },
-
                 action_palette = { provider = "snacks" }
             }
-
-
         }
-
     },
 
     {

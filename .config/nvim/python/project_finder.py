@@ -253,8 +253,8 @@ if __name__ == "__main__":
             if files_and_hi:
                 print("\n".join(files_and_hi))
 
-            with open("./log.txt", "w") as o:
-                o.write(" ".join(files_and_hi))
+            # with open("./log.txt", "w") as o:
+            #     o.write(" ".join(files_and_hi))
 
         elif sys.argv[1] == "ranked_tasks":
             files = find_tasks(status="active,todo")

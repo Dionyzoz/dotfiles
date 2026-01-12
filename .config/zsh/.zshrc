@@ -26,7 +26,7 @@ export PROMPT_EOL_MARK=""
 
 # Set case-insenitive TAB completion
 
-autoload -U compinit; compinit
+autoload -U compinit; compinit -d "$XDG_CACHE_HOME/zsh/.zcompdump"
 
 bindkey '\t' complete-word
 
