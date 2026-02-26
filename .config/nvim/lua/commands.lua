@@ -1,7 +1,8 @@
 local map = vim.keymap.set
 
 
-map('t', '<ESC>', '<C-\\><C-n>', { noremap = true, silent = true })
+-- map('t', '<ESC>', '<C-\\><C-n>', { noremap = true, silent = true })
+map("t", "<C-q>", "<C-\\><C-n>", { noremap = true, silent = true })
 
 -- terminals
 map('n', '<leader>t', ':belowright new | resize 20 | term<CR>',

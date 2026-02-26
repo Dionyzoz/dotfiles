@@ -356,6 +356,19 @@ return {
     end
 
 }, {
+    'mfussenegger/nvim-lint',
+    config = function()
+        local lint = require('lint')
+        lint.linters_by_ft = {
+            sql = { 'sqlfluff' },
+        }
+        vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
+            callback = function()
+                lint.try_lint()
+            end,
+        })
+    end,
+}, {
     'nvimtools/none-ls.nvim',
     config = function() -- Enable black and prettier formatting
         local null_ls = require("null-ls")

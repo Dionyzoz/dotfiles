@@ -2,9 +2,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
     pattern = "*",
     callback = function()
         vim.api.nvim_buf_set_keymap(0, 'n', '<leader>q', ':bdelete!<cr>', { noremap = true, silent = true })
+
         if vim.startswith(vim.api.nvim_buf_get_name(0), "term://") then
             vim.cmd("startinsert")
         end
+ 
     end
 })
 

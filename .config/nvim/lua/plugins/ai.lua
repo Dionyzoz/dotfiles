@@ -25,7 +25,7 @@ return {
                             },
                             schema = {
                                 model = {
-                                    default = "claude-sonnet-4-20250514"
+                                    default = "claude-sonnet-4-5-20250929"
                                 }
                             }
                         })
@@ -37,19 +37,19 @@ return {
                             }
                         })
                     end,
-                     azure_openai = function()
+                    azure_openai = function()
                         return require("codecompanion.adapters").extend("azure_openai", {
-                          env = {
-                            api_key = os.getenv("AZUREAI_SECRET"),
-                            endpoint = os.getenv("AZUREAI_ENDPOINT"),
-                          },
-                          schema = {
-                            model = {
-                              default = "DeepSeek-V3.2",
+                            env = {
+                                api_key = os.getenv("AZUREAI_SECRET"),
+                                endpoint = os.getenv("AZUREAI_ENDPOINT"),
                             },
-                          },
+                            schema = {
+                                model = {
+                                    default = "gpt-5.2",
+                                },
+                            },
                         })
-                      end,
+                    end,
                 }
             },
 
@@ -77,6 +77,26 @@ return {
             }
         }
     },
+
+    -- {
+    --     'yetone/avante.nvim',
+    --     event = 'VeryLazy',
+    --     version = false,
+    --     dependencies = {
+    --         'nvim-lua/plenary.nvim',
+    --         'nvim-treesitter/nvim-treesitter',
+    --     },
+    --     opts = {
+    --         provider = 'azure',
+    --         providers = {
+    --             azure = {
+    --                 endpoint = os.getenv('AZUREAI_ENDPOINT'),
+    --                 api_key = os.getenv('AZUREAI_SECRET'),
+    --                 model = 'gpt-5.2-codex',
+    --             },
+    --         },
+    --     },
+    -- },
 
     {
         'MeanderingProgrammer/render-markdown.nvim',

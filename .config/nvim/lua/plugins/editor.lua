@@ -110,71 +110,19 @@ return {
     --         vim.keymap.set("n", "<C-n>", ":NERDTree<cr>")
     --     end
     -- },
-    {
-        'nvim-pack/nvim-spectre',
-        opts = {
-            live_update = true,
-            ['run_replace'] = {
-                map = "<leader>s",
-                cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
-                desc = "replace all"
-            },
-            find_engine = {
-                ['rg'] = {
-                    cmd = "rg",
-                    args = {
-                        '--color=never',
-                        '--no-heading',
-                        '--with-filename',
-                        '--line-number',
-                        '--column',
-                        '--pcre2',
-                    },
-                    optiongg = {
-                        ['ignore-case'] = {
-                            value = "--ignore-case",
-                            icon = "[I]",
-                            desc = "ignore case"
-                        },
-                        ['hidden'] = {
-                            value = "--hidden",
-                            desc = "hidden file",
-                            icon = "[H]"
-                        },
-                        -- you can put any rg search option you want here it can toggle with
-                        -- show_option function
-                    }
-                },
-            }
-        },
-        keys = {
-            {
-                '<leader>S',
-                '<cmd>lua require("spectre").toggle()<CR>',
-                desc = "Toggle Spectre"
-            },
-            {
-                '<leader>sw',
-                '<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
-                desc = "Search current word"
-            },
-            {
-                '<leader>sw',
-                '<esc><cmd>lua require("spectre").open_visual()<CR>',
-                desc = "Search current word",
-                mode = 'v'
-            },
-            {
-
-                '<leader>sp',
-                '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
-                desc = "Search on current file"
-            }
-
-        }
-
-    },
-
+      {
+        'MagicDuck/grug-far.nvim',
+        -- Note (lazy loading): grug-far.lua defers all it's requires so it's lazy by default
+        -- additional lazy config to defer loading is not really needed...
+        config = function()
+          -- optional setup call to override plugin options
+          -- alternatively you can set options with vim.g.grug_far = { ... }
+          require('grug-far').setup({
+            -- options, see Configuration section below
+            -- there are no required options atm
+          });
+        end
+      },
     {
         'nvim-telescope/telescope.nvim',
         dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim' },
