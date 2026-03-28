@@ -1,0 +1,1 @@
+/home/lucas/.config/x11/xinitrc

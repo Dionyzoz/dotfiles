@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# map caps to escape
+setxkbmap -option caps:escape &
+
+xrandr --output DP-0 --mode 3840x1600 --rate 144 --dpi 140
+xrdb "$XDG_CONFIG_HOME/x11/xresources"
+# picom -b --config ~/.config/picom/picom.conf &
+
+dbus-update-activation-environment DISPLAY
+
+xset -dpms # Disables Energy Star features
+xset s off # Disables screen saver
+
+export GTK_THEME=Adwaita:dark
