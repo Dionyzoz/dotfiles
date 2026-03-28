@@ -1,17 +1,50 @@
 #!/bin/bash
 
+# ---
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# ---
+# export SECOND_BRAIN="$HOME/Vaults/rc"
+# export WORKENV="rc"
 
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-
-export SECOND_BRAIN="$HOME/Vaults/rc"
-export WORKENV="rc"
-
+# ---
 export PATH="$PATH:$HOME/.local/bin:$HOME/scripts"
 
+# ---
+# Default programs
+export BROWSER="brave"
+export EDITOR="nvim"
+export TERMINAL="alacritty"
+
+# ---
+# You may need to manually set your language environment.
+export LANG=en_US.UTF-8
+
+# ---
 export PYDEVD_DISABLE_FILE_VALIDATION=1
 
-. "$XDG_CONFIG_HOME/shell/secrets"
+# ---- 
+export XINITRC="$HOME/.xinitrc"
+
+# ---- 
+# Cleaning home
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+export WGETRC=$XDG_CACHE_HOME/wget/wgetrc
+export YARN_CACHE_FOLDER=$XDG_CACHE_HOME
+export MPLCONFIGDIR=$XDG_CACHE_HOME/matplotlib
+export NPM_CONFIG_USERCONFIG=$XDG_CACHE_HOME/npm/npmrc
+export PSQLRC=$XDG_CONFIG_HOME/pg/psqlrc
+export PSQL_HISTORY=$XDG_CACHE_HOME/pg/psql_history
+export PYTHONSTARTUP=$XDG_CACHE_HOME/python/pythonrc
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+# ---- 
+
+. "$XDG_CONFIG_HOME/shell/secrets" # api keys and such
+
+# ---- 
+# Prevents servers or WSL from starting X, and only starts on first tty session (post login).
+
+[[ -z "$DISPLAY" && "$(tty)" == "/dev/tty1" && -z "$WSL_DISTRO_NAME" ]] && exec startx "$XINITRC"

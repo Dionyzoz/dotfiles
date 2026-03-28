@@ -82,6 +82,4 @@ function _bindfzfkeys() {
 
 zvm_after_init_commands+=('_bindfzfkeys')
 
-
 source $XDG_CONFIG_HOME/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-

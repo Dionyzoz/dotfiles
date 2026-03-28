@@ -229,4 +229,4 @@ exec_always --no-startup-id feh --bg-fill --no-fehbg --randomize '/home/lucas/pi
 # exec_always --no-startup-id $HOME/.config/polybar/launch.sh --neon
 
 # Start up computer engineering environment
-exec --no-startup-id i3-msg 'workspace 4; exec --no-startup-id okular /home/lucas/documents/CE/patterson/book.epub; workspace 4; exec --no-startup-id Obsidian'
+exec --no-startup-id i3-msg 'workspace 4; exec --no-startup-id okular /home/lucas/documents/CE/patterson/book.epub'
