@@ -5,6 +5,7 @@ import re
 import yaml
 from pathlib import Path
 import time
+from datetime import date
 
 SECOND_BRAIN = os.getenv("SECOND_BRAIN")
 
@@ -209,9 +210,29 @@ def status_update(filepath, status):
     try:
         with FrontMatterUpdate(filepath) as fm:
             fm["status"] = status
+            if status == "completed":
+                fm["completed_at"] = date.today().isoformat()
 
     except Exception as e:
         print(f"Error removing rank: {str(e)}", file=stderr)
+
+
+def completed_today():
+    """Count tasks completed today by checking completed_at frontmatter field"""
+    today = date.today().isoformat()
+    count = 0
+    for tasks_dir in [TASKS_DIR, PROJECTS_DIR]:
+        if not tasks_dir or not tasks_dir.exists():
+            continue
+        for filepath in glob.glob(str(tasks_dir / "**" / "*.md"), recursive=True):
+            if any(parent.name == "archive" for parent in Path(filepath).parents):
+                continue
+            meta = extract_front_matter(filepath)
+            if not meta or meta.get("type") != "task":
+                continue
+            if meta.get("status") == "completed" and meta.get("completed_at") == today:
+                count += 1
+    print(count)
 
 
 def remove_rank(filepath):
@@ -273,6 +294,9 @@ if __name__ == "__main__":
 
         elif sys.argv[1] == "remove_rank":
             remove_rank(sys.argv[2])
+
+        elif sys.argv[1] == "completed_today":
+            completed_today()
 
         elif sys.argv[1] == "link_to_project":
             # time.sleep(10000) # debugging for neovim to see start params

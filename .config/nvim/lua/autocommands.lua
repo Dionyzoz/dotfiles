@@ -19,6 +19,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
+
 -- -- CLIPBOARD SOLUTION IN WSL
 -- vim.api.nvim_create_autocmd({ "FocusGained" }, {
 --     pattern = { "*" },

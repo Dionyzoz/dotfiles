@@ -129,6 +129,24 @@ local function status_update()
                 task_util.run_python_script({ 'status_update', filepath, option },
                     function(_)
                         vim.cmd('checktime') -- Check for external file modifications
+                        if option == "completed" then
+                            task_util.run_python_script({ 'completed_today' }, function(results)
+                                local count = tonumber(results[1]) or 0
+                                local name = get_stem(filepath)
+                                local messages = {
+                                    "First one down. Momentum is real.",
+                                    "Two. You're on a streak.",
+                                    "Three tasks. Not luck, execution.",
+                                    "Four. Most people haven't done one.",
+                                }
+                                local msg = messages[math.min(count, #messages)]
+                                    or (count .. " tasks. You are a machine today.")
+                                vim.notify(
+                                    string.format("Done: %s\n%s (%d today)", name, msg, count),
+                                    vim.log.levels.INFO
+                                )
+                            end)
+                        end
                     end)
             end)
     end)
