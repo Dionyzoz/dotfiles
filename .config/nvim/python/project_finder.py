@@ -7,10 +7,10 @@ from pathlib import Path
 import time
 from datetime import date
 
-SECOND_BRAIN = os.getenv("SECOND_BRAIN")
+NOTES_DIR = os.getenv("NOTES_DIR")
 
-PROJECTS_DIR = Path(SECOND_BRAIN) / "1-projects" if SECOND_BRAIN else None
-TASKS_DIR = Path(SECOND_BRAIN) / "0-tasks" if SECOND_BRAIN else None
+PROJECTS_DIR = Path(NOTES_DIR) / "1-projects" if NOTES_DIR else None
+TASKS_DIR = Path(NOTES_DIR) / "0-tasks" if NOTES_DIR else None
 
 
 ALL_STATUSES = ["idea", "todo", "active", "completed", "abandoned", "blocked"]
@@ -256,7 +256,7 @@ def status_options(filepath):
 if __name__ == "__main__":
     # time.sleep(10000) # debugging for neovim to see start params
     if not PROJECTS_DIR:
-        print("Error: SECOND_BRAIN environment variable not set", file=stderr)
+        print("Error: NOTES_DIR environment variable not set", file=stderr)
         sys.exit(1)
 
     if len(sys.argv) > 1:

@@ -1,7 +1,7 @@
 local Path = require('plenary.path')
 
 vim.api.nvim_create_user_command("Daily", function(opts)
-    local SECOND_BRAIN = os.getenv("SECOND_BRAIN")
+    local NOTES_DIR = os.getenv("NOTES_DIR")
     local offset = opts.args
     local path = ""
     if offset then
@@ -10,7 +10,7 @@ vim.api.nvim_create_user_command("Daily", function(opts)
         path = vim.fn.system("d -q")
     end
     vim.cmd("e " .. path)
-    vim.cmd("lcd" .. SECOND_BRAIN)
+    vim.cmd("lcd" .. NOTES_DIR)
     vim.cmd("w")
     vim.cmd("normal! 5ggzz")
     if not offset then
@@ -19,16 +19,16 @@ vim.api.nvim_create_user_command("Daily", function(opts)
 end, { nargs = '?' })
 
 vim.api.nvim_create_user_command("Note", function()
-    local SECOND_BRAIN = os.getenv("SECOND_BRAIN")
+    local NOTES_DIR = os.getenv("NOTES_DIR")
     vim.ui.input({ prompt = "Enter filename: " }, function(input)
         if input then
             -- Escape spaces in filename
-            local path = SECOND_BRAIN .. "/0-inbox/" .. input .. ".md"
+            local path = NOTES_DIR .. "/0-inbox/" .. input .. ".md"
             vim.fn.system("touch " .. vim.fn.shellescape(path))
 
             vim.cmd("e " .. path)
             -- vim.cmd("w")
-            vim.cmd("lcd " .. SECOND_BRAIN)
+            vim.cmd("lcd " .. NOTES_DIR)
             vim.cmd("normal! 7ggzz")
             vim.cmd("startinsert")
         end
@@ -36,12 +36,12 @@ vim.api.nvim_create_user_command("Note", function()
 end, {})
 
 vim.api.nvim_create_user_command("Zet", function()
-    local SECOND_BRAIN = os.getenv("SECOND_BRAIN")
+    local NOTES_DIR = os.getenv("NOTES_DIR")
     vim.ui.input({ prompt = "Enter filename: " }, function(input)
         if input then
             local path = vim.fn.system("echo " .. input .. " | zet -q")
             vim.cmd("e " .. path)
-            vim.cmd("lcd" .. SECOND_BRAIN)
+            vim.cmd("lcd" .. NOTES_DIR)
             -- vim.cmd("w")
             vim.cmd("normal! 7ggzz")
             vim.cmd("startinsert")
@@ -50,12 +50,12 @@ vim.api.nvim_create_user_command("Zet", function()
 end, {})
 
 vim.api.nvim_create_user_command("Task", function()
-    local SECOND_BRAIN = os.getenv("SECOND_BRAIN")
+    local NOTES_DIR = os.getenv("NOTES_DIR")
     vim.ui.input({ prompt = "Enter task name: " }, function(input)
         if input then
             local path = vim.fn.system("echo " .. input .. " | task -q")
             vim.cmd("e " .. path)
-            vim.cmd("lcd" .. SECOND_BRAIN)
+            vim.cmd("lcd" .. NOTES_DIR)
             -- vim.cmd("w")
             vim.cmd("normal! 7ggzz")
             vim.cmd("startinsert")
@@ -64,7 +64,7 @@ vim.api.nvim_create_user_command("Task", function()
 end, {})
 
 vim.api.nvim_create_user_command("Permanent", function()
-    local SECOND_BRAIN = os.getenv("SECOND_BRAIN")
+    local NOTES_DIR = os.getenv("NOTES_DIR")
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     local body = table.concat(lines, "\n")
     vim.ui.input({ prompt = "Enter filename: " }, function(input)
@@ -76,7 +76,7 @@ vim.api.nvim_create_user_command("Permanent", function()
             print(path)
             local og_path = vim.fn.expand("%")
             vim.cmd("e " .. path)
-            vim.cmd("lcd" .. SECOND_BRAIN)
+            vim.cmd("lcd" .. NOTES_DIR)
             os.remove(og_path)
             -- vim.cmd("w")
             vim.cmd("normal! 7ggzz")
@@ -86,7 +86,7 @@ vim.api.nvim_create_user_command("Permanent", function()
 end, {})
 
 vim.api.nvim_create_user_command("Template", function()
-    local SECOND_BRAIN = os.getenv("SECOND_BRAIN")
+    local NOTES_DIR = os.getenv("NOTES_DIR")
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     local body = table.concat(lines, "\n")
     vim.ui.input({ prompt = "Enter filename: " }, function(input)
@@ -98,7 +98,7 @@ vim.api.nvim_create_user_command("Template", function()
             print(path)
 
             vim.cmd("e " .. path)
-            vim.cmd("lcd" .. SECOND_BRAIN)
+            vim.cmd("lcd" .. NOTES_DIR)
             vim.cmd("w")
             vim.cmd("normal! 7ggzz")
             vim.cmd("startinsert")
@@ -108,10 +108,10 @@ end, {})
 
 
 vim.api.nvim_create_user_command("Archive", function()
-    local SECOND_BRAIN = os.getenv("SECOND_BRAIN")
+    local NOTES_DIR = os.getenv("NOTES_DIR")
 
-    if vim.fn.getcwd() ~= SECOND_BRAIN then
-        vim.notify("Archiving only works in $SECOND_BRAIN dir", "error")
+    if vim.fn.getcwd() ~= NOTES_DIR then
+        vim.notify("Archiving only works in $NOTES_DIR dir", "error")
         return
     end
 
@@ -136,7 +136,7 @@ vim.api.nvim_create_user_command("Archive", function()
 
     -- Update the buffer with the new file location
     vim.cmd("e " .. target_path:absolute())
-    vim.cmd("lcd" .. SECOND_BRAIN)
+    vim.cmd("lcd" .. NOTES_DIR)
 
     vim.notify("Moved to: " .. target_path:absolute(), "info")
 

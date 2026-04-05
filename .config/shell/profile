@@ -6,10 +6,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 # ---
-# export SECOND_BRAIN="$HOME/Vaults/rc"
-# export WORKENV="rc"
-
-# ---
 export PATH="$PATH:$HOME/.local/bin:$HOME/scripts"
 
 # ---
@@ -43,6 +39,8 @@ export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 # ---- 
 
 . "$XDG_CONFIG_HOME/shell/secrets" # api keys and such
+
+. "$XDG_CONFIG_HOME/shell/environments/env_profile" # note taking environment default
 
 # ---- 
 # Prevents servers or WSL from starting X, and only starts on first tty session (post login).
