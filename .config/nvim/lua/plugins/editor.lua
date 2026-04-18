@@ -85,7 +85,7 @@ return {
                 -- toggle = { map = LazyVim.safe_keymap_set },
                 -- words = { enabled = true },
             })
-            require "adhd.secondbrain" -- requires snacks to look nice --
+            require "adhd.notes" -- requires snacks to look nice --
         end
     },
     {
