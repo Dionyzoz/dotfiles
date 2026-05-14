@@ -1,5 +1,68 @@
 local Path = require('plenary.path')
 
+local function get_notes_dir()
+    local notes_dir = os.getenv("NOTES_DIR")
+
+    if not notes_dir or notes_dir == "" then
+        notes_dir = "~/vault"
+    end
+
+    return vim.fn.expand(notes_dir):gsub("/+$", "")
+end
+
+local function task_file_stem(title)
+    local stem = title
+
+    for _, char in ipairs({ "/", ":", "*", "?", '"', "<", ">", "|", "\\" }) do
+        stem = stem:gsub(vim.pesc(char), "-")
+    end
+
+    stem = vim.trim(stem):gsub("%s+", " "):gsub("%.md$", "")
+
+    if stem == "" then
+        return nil
+    end
+
+    return stem
+end
+
+local function create_task_file(title)
+    local clean_title = vim.trim(title):gsub("%s+", " ")
+    local stem = task_file_stem(clean_title)
+
+    if not stem then
+        return nil, "Title is required."
+    end
+
+    local notes_dir = get_notes_dir()
+    local tasks_dir = notes_dir .. "/0-tasks"
+    vim.fn.mkdir(tasks_dir, "p")
+
+    local path = tasks_dir .. "/" .. stem .. ".md"
+    local stat = (vim.uv or vim.loop).fs_stat
+
+    if stat(path) then
+        path = tasks_dir .. "/" .. stem .. " " .. os.date("%Y%m%d%H%M%S") .. ".md"
+    end
+
+    local result = vim.fn.writefile({
+        "---",
+        "status: idea",
+        "type: task",
+        "rank: " .. os.time(),
+        "---",
+        "",
+        "# " .. clean_title,
+        "",
+    }, path)
+
+    if result ~= 0 then
+        return nil, "Could not create task: " .. path
+    end
+
+    return path, nil, notes_dir
+end
+
 vim.api.nvim_create_user_command("Daily", function(opts)
     local NOTES_DIR = os.getenv("NOTES_DIR")
     local offset = opts.args
@@ -50,15 +113,21 @@ vim.api.nvim_create_user_command("Zet", function()
 end, {})
 
 vim.api.nvim_create_user_command("Task", function()
-    local NOTES_DIR = os.getenv("NOTES_DIR")
     vim.ui.input({ prompt = "Enter task name: " }, function(input)
         if input then
-            local path = vim.fn.system("echo " .. input .. " | task -q")
-            vim.cmd("e " .. path)
-            vim.cmd("lcd" .. NOTES_DIR)
-            -- vim.cmd("w")
+            local path, err, notes_dir = create_task_file(input)
+
+            if not path then
+                vim.notify(err, vim.log.levels.ERROR)
+                return
+            end
+
+            vim.cmd("edit " .. vim.fn.fnameescape(path))
+            vim.cmd("lcd " .. vim.fn.fnameescape(notes_dir))
             vim.cmd("normal! 7ggzz")
             vim.cmd("startinsert")
+
+            require("adhd.utils.neo-tree-refresh").refresh_filesystem()
         end
     end)
 end, {})

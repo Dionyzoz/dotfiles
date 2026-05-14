@@ -1,4 +1,4 @@
-#!/bin/bash
-
-alias me="export NOTES_DIR='$HOME/Vaults/personal' ; export WORKENV='me'"
-alias rc="export NOTES_DIR='$HOME/Vaults/rc' ; export WORKENV='rc'"
+# #!/bin/bash
+#
+# alias me="export NOTES_DIR='$HOME/vaults/personal' ; export WORKENV='me'"
+# alias rc="export NOTES_DIR='$HOME/vaults/work' ; export WORKENV='rc'"

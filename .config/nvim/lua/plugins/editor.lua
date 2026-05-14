@@ -88,15 +88,15 @@ return {
             require "adhd.notes" -- requires snacks to look nice --
         end
     },
-    {
-        'phaazon/hop.nvim',
-        opts = { keys = 'etovxqpdygfblzhckisuran' },
-        keys = {
-            { '<leader>j', ':HopWord<cr>',                silent = true, desc = "Hop to a word somewhere in buffer" },
-
-            { ';j',        ':HopAnywhereCurrentLine<cr>', silent = true, desc = "Hop to a character in line" }
-        }
-    },
+    -- {
+    --     'phaazon/hop.nvim',
+    --     opts = { keys = 'etovxqpdygfblzhckisuran' },
+    --     keys = {
+    --         { '<leader>j', ':HopWord<cr>',                silent = true, desc = "Hop to a word somewhere in buffer" },
+    --
+    --         { ';j',        ':HopAnywhereCurrentLine<cr>', silent = true, desc = "Hop to a character in line" }
+    --     }
+    -- },
     -- {
     --     'preservim/nerdtree',
     --     enabled = false,
